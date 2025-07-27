@@ -12,7 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/5.1.1/marked.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.2.4/mermaid.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.2.4/mermaid.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/remark/14.0.2/remark.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
@@ -617,9 +617,9 @@
             
             <div class="setting-group">
                 <label class="setting-label">Plugins</label>
-                <label style="display: block; margin: 8px 0;">
+                <!-- <label style="display: block; margin: 8px 0;">
                     <input type="checkbox" class="checkbox" id="mermaidPlugin" checked> Mermaid Diagrams
-                </label>
+                </label> -->
                 <label style="display: block; margin: 8px 0;">
                     <input type="checkbox" class="checkbox" id="presentationPlugin" checked> Presentation Mode
                 </label>
@@ -658,13 +658,14 @@
         let contextMenu = null;
         let settings = {
             htmlSupport: false,
-            mermaidPlugin: true,
+            mermaidPlugin: false,
             presentationPlugin: true
         };
         let selectedFolderId = null;
 
         // Plugin system
         const plugins = {
+            /*
             mermaid: {
                 name: 'Mermaid Diagrams',
                 enabled: true,
@@ -688,6 +689,7 @@
                     });
                 }
             },
+            */
             presentation: {
                 name: 'Presentation Mode',
                 enabled: true,
@@ -761,7 +763,7 @@
 
         async function saveSettings() {
             settings.htmlSupport = document.getElementById('htmlSupport').checked;
-            settings.mermaidPlugin = document.getElementById('mermaidPlugin').checked;
+            //settings.mermaidPlugin = document.getElementById('mermaidPlugin').checked;
             settings.presentationPlugin = document.getElementById('presentationPlugin').checked;
             
             try {
@@ -1651,7 +1653,7 @@ Start writing your note here...`;
 
         function showSettings() {
             document.getElementById('htmlSupport').checked = settings.htmlSupport;
-            document.getElementById('mermaidPlugin').checked = settings.mermaidPlugin;
+            //document.getElementById('mermaidPlugin').checked = settings.mermaidPlugin;
             document.getElementById('presentationPlugin').checked = settings.presentationPlugin;
             
             document.getElementById('settingsOverlay').classList.remove('hidden');
