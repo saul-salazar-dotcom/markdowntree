@@ -722,12 +722,8 @@
                 await createWelcomeNote();
                 await loadNotes(); // Reload after creating welcome note
             }
-            
-            // Open the first note by default
-            if (currentNotes.length > 0 && !currentNote) {
-                openNote(currentNotes[0]);
-            }
-            
+
+            openNote(currentNotes[0]);
             updateFileTree();
             
             // Set up editor event listener
