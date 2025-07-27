@@ -811,47 +811,24 @@
 
         async function createWelcomeNote() {
             const welcomeContent = `---
-title: Welcome to Notes PWA
+title: Welcome
 tags: [welcome, guide]
 created: ${new Date().toISOString()}
 ---
 
-# Welcome to Notes PWA
+# Welcome to MarkDownTree
 
-This is an advanced note-taking application with the following features:
+This is a **Progressive Web App**, you can install it on your device (mobile or desktop) and use it offline.
 
 ## Features
-- **Markdown Support**: Write in markdown with live preview
-- **Offline First**: All data stored locally using IndexedDB
-- **Plugin System**: Extensible with custom plugins
-- **Multiple Views**: Text only, WYSIWYG, or split view
-- **File Management**: Import/export individual notes or entire collections
-
-## Plugins
-This app comes with two plugins enabled by default:
-
-### 1. Mermaid Diagrams
-Create beautiful diagrams using mermaid syntax:
-
-\`\`\`mermaid
-graph TD
-    A[Start] --> B{Decision}
-    B -->|Yes| C[Action 1]
-    B -->|No| D[Action 2]
-    C --> E[End]
-    D --> E[End]
-\`\`\`
-
-### 2. Presentation Mode
-Use toolbar button to switch to presentation mode for slide shows.
-
-## Getting Started
-1. Click the "📄+" button to create a new note
-2. Use the tabs to switch between open notes
-3. Try different view modes (Text, Preview, Split)
-4. Check out the settings to customize your experience
-
-Happy note-taking! 📝`;
+- **Markdown Support**: Write in markdown syntax.
+- **Syntax Highlight**: Add color to your code snippets.
+- **File Tree**: Organize notes into hierarchical folders.
+- **Presentations**: Allows to use remarkjs to create and preview presentations.
+- **Outline**: Show the headers of the notes in a tree structure for easy navigation.
+- **Local First**: All your data is stored locally, it never leaves your device.
+- **Large data Support**: Thanks to IndexedDB, you can store large amounts of data.
+- **No Vendor Lock-In**: Import/export individual notes or entire collections as \`.md\` files`;
 
             const note = await saveNote('Welcome to Notes PWA', welcomeContent);
 
