@@ -1530,7 +1530,8 @@ Start writing your note here...`;
             if (!currentNote || !settings.presentationPlugin) return;
             
             const content = document.getElementById('editor').value;
-            const slides = content.split(/^---$/gm).map(slide => slide.trim()).filter(slide => slide);
+            const slides = content.replace(/^---[\s\S]*?---\s*/, '')
+                .split(/^---$/gm).map(slide => slide.trim()).filter(slide => slide);
             
             if (slides.length === 0) return;
             
@@ -1539,7 +1540,7 @@ Start writing your note here...`;
             const container = document.getElementById('editorContainer')
             
             container.innerHTML = `
-                <div class="presentation-view">
+                <div class="presentation-view" style="width: 100%;">
                     <div class="slide" id="currentSlide"></div>
                     <div class="presentation-controls">
                         <button class="btn" onclick="previousSlide()">← Previous</button>
