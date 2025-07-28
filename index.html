@@ -716,6 +716,16 @@
             navigator.serviceWorker.register('/sw.js')
                 .then(registration => {
                     console.log('ServiceWorker registration successful:', registration);
+                    registration.onupdatefound = () => {
+                        const newSW = registration.installing;
+                        newSW.onstatechange = () => {
+                            if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+                            // A new version is available
+                            console.log('New content available, reloading...');
+                            window.location.reload(); // or show a toast prompting user
+                            }
+                        };
+                    };
                 })
                 .catch(error => {
                     console.error('ServiceWorker registration failed:', error);
