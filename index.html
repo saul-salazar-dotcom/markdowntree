@@ -14,6 +14,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.2.4/mermaid.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/remark/14.0.2/remark.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/markmap-lib"></script>
+    <script src="https://cdn.jsdelivr.net/npm/markmap-view"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-dark.min.css" rel="stylesheet">
@@ -469,6 +472,13 @@
             font-weight: 600;
         }
 
+        #mindmap {
+            background: #1e1e1e;
+            color: white;
+            overflow: auto;
+            padding: 10px;
+        }
+
         .checkbox {
             margin-right: 8px;
         }
@@ -567,6 +577,7 @@
                 <button class="toolbar-btn" onclick="setViewMode('preview')" id="btn-preview">Preview</button>
                 <button class="toolbar-btn" onclick="setViewMode('split')" id="btn-split">Split</button>
                 <button class="toolbar-btn" onclick="startPresentation()">🎬 Present</button>
+                <button class="toolbar-btn" onclick="setViewMode('mindmap')" id="btn-mindmap">🧠 Mindmap</button>
                 <button class="toolbar-btn" onclick="showInstallPanel()">📱 Install</button>
                 <button class="toolbar-btn" onclick="importNotes()">📥 Import</button>
                 <button class="toolbar-btn" onclick="exportNotes()">📤 Export</button>
@@ -644,6 +655,7 @@
     </div>
 
     <input type="file" id="fileInput" accept=".md,.zip" style="display: none;" onchange="handleFileImport()">
+    <canvas id="canvas" style="display:none;"></canvas>
 
     <script>
         // Database setup
@@ -1416,6 +1428,14 @@ Start writing your note here...`;
                         <div class="preview" id="preview"></div>
                     </div>
                 `;
+            } else if (mode === 'mindmap') {
+                container.innerHTML = `
+                    <div class="editor-pane">
+                        <div class="preview" id="preview">
+                            <svg id="mindmap" style="width: 100%; height: 100%;"></svg>
+                        </div>
+                    </div>
+                `;
             }
             
             // Re-attach event listener
@@ -1424,15 +1444,22 @@ Start writing your note here...`;
                 editor.addEventListener('input', debounce(handleEditorChange, 500));
             }
             
-            updatePreview();
+            updatePreview(mode);
         }
 
-        function updatePreview() {
+        function updatePreview(mode) {
             const preview = document.getElementById('preview');
             if (!preview) return;
             
             const editor = document.getElementById('editor');
             let content = editor ? editor.value : (currentNote ? currentNote.content : '');
+
+            if (mode === 'mindmap') {
+                const transformer = new markmap.Transformer();
+                const { root } = transformer.transform(content);
+                markmap.Markmap.create("#mindmap", null, root);
+                return
+            }
             
             // Remove frontmatter from preview
             content = content.replace(/^---\n[\s\S]*?\n---\n/, '');
